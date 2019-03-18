@@ -46,8 +46,14 @@ public class Test {
         public void handle(HttpExchange t) throws IOException {
             InputStream inputStream = t.getRequestBody();
             Gson gson = new Gson();
-            int index = gson.fromJson(new InputStreamReader(inputStream, "UTF-8"), int.class);
-            String response = gson.toJson(bookList.get(index));
+            int value = gson.fromJson(new InputStreamReader(inputStream, "UTF-8"), int.class);
+            int index = value;
+            for (Book book: bookList){
+                if(book.getBookID()==value){
+                    index = value;
+                }
+            }
+            String response = gson.toJson(bookList.get(index-1));
             t.sendResponseHeaders(200, response.length());
             OutputStream os = t.getResponseBody();
             os.write(response.getBytes());
@@ -76,9 +82,14 @@ public class Test {
         public void handle(HttpExchange t) throws IOException {
             InputStream inputStream = t.getRequestBody();
             Gson gson = new Gson();
-            int index = gson.fromJson(new InputStreamReader(inputStream, "UTF-8"), int.class);
-            Book bookDeleted = bookList.get(index);
-            bookList.remove(index);
+            int value = gson.fromJson(new InputStreamReader(inputStream, "UTF-8"), int.class);
+            int index = value;
+            for (Book book: bookList){
+                if(book.getBookID()==value){
+                    index = value;
+                }
+            }Book bookDeleted = bookList.get(index-1);
+            bookList.remove(index-1);
             String response = gson.toJson(bookDeleted);
             t.sendResponseHeaders(200, response.length());
             OutputStream os = t.getResponseBody();
