@@ -34,8 +34,7 @@ public class Test {
         @Override
         public void handle(HttpExchange t) throws IOException {
             Gson gson = new Gson();
-            String jsnObj = gson.toJson(bookList);
-            String response = jsnObj;
+            String response = gson.toJson(bookList);
             t.sendResponseHeaders(200, response.length());
             OutputStream os = t.getResponseBody();
             os.write(response.getBytes());
@@ -48,8 +47,7 @@ public class Test {
             InputStream inputStream = t.getRequestBody();
             Gson gson = new Gson();
             int index = gson.fromJson(new InputStreamReader(inputStream, "UTF-8"), int.class);
-            String jsnObj = gson.toJson(bookList.get(index));
-            String response = jsnObj;
+            String response = gson.toJson(bookList.get(index));
             t.sendResponseHeaders(200, response.length());
             OutputStream os = t.getResponseBody();
             os.write(response.getBytes());
@@ -61,14 +59,11 @@ public class Test {
         @Override
         public void handle(HttpExchange t) throws IOException {
             InputStream inputStream = t.getRequestBody();
-            JsonParser jsonParser = new JsonParser();
-            JsonObject jsonObject = new JsonObject();
             Gson gson = new Gson();
             String bookName = gson.fromJson(new InputStreamReader(inputStream, "UTF-8"), String.class);
             Book newBook = new Book(bookList.get(bookList.size()-1).getBookID()+1, bookName);
             bookList.add(newBook);
-            String jsnObj = gson.toJson(newBook);
-            String response = jsnObj;
+            String response = gson.toJson(newBook);
             t.sendResponseHeaders(200, response.length());
             OutputStream os = t.getResponseBody();
             os.write(response.getBytes());
@@ -84,8 +79,7 @@ public class Test {
             int index = gson.fromJson(new InputStreamReader(inputStream, "UTF-8"), int.class);
             Book bookDeleted = bookList.get(index);
             bookList.remove(index);
-            String jsnObj = gson.toJson(bookDeleted);
-            String response = jsnObj;
+            String response = gson.toJson(bookDeleted);
             t.sendResponseHeaders(200, response.length());
             OutputStream os = t.getResponseBody();
             os.write(response.getBytes());
