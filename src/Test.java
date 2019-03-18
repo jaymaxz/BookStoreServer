@@ -4,7 +4,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.util.ArrayList;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -25,6 +24,8 @@ public class Test {
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
         server.createContext("/getAllBooks", new MyHandler());
         server.createContext("/getBookDetails", new MyHandler2());
+        server.createContext("/addBook", new MyHandler3());
+        server.createContext("/deleteBook", new MyHandler4());
         server.setExecutor(null); // creates a default executor
         server.start();
     }
@@ -32,25 +33,9 @@ public class Test {
     static class MyHandler implements HttpHandler {
         @Override
         public void handle(HttpExchange t) throws IOException {
-            //InputStream inputStream = t.getRequestBody();
-            //JSONParser jsonParser = new JSONParser();
-            //JSONObject jsonObject = new JSONObject();
-            //JSONArray jsonArray = new JSONArray();
-            //try {
-            //    jsonArray = (JSONArray)jsonParser.parse(
-            //            new InputStreamReader(inputStream, "UTF-8"));
-            //} catch (ParseException e) {
-            //    e.printStackTrace();
-            //}
-            //String response = jsonArray.toJSONString();
-            //jsonArray = (JSONArray)jsonParser.parse(bookList.toString());
-            //jsonArray.add(jsonParser.parsebookList.get(0));
-            //jsonArray.add(bookList.get(1));
-            //String response = "[{\"bookID\":1,\"name\":\"The Hobbit\"},{\"bookID\":1,\"name\":\"The Hobbit\"}]";
-            //String response = jsonArray.toJSONString();
             Gson gson = new Gson();
             String jsnObj = gson.toJson(bookList);
-            String response = jsnObj.toString();
+            String response = jsnObj;
             t.sendResponseHeaders(200, response.length());
             OutputStream os = t.getResponseBody();
             os.write(response.getBytes());
@@ -61,25 +46,46 @@ public class Test {
         @Override
         public void handle(HttpExchange t) throws IOException {
             InputStream inputStream = t.getRequestBody();
+            Gson gson = new Gson();
+            int index = gson.fromJson(new InputStreamReader(inputStream, "UTF-8"), int.class);
+            String jsnObj = gson.toJson(bookList.get(index));
+            String response = jsnObj;
+            t.sendResponseHeaders(200, response.length());
+            OutputStream os = t.getResponseBody();
+            os.write(response.getBytes());
+            os.close();
+        }
+    }
+
+    static class MyHandler3 implements HttpHandler {
+        @Override
+        public void handle(HttpExchange t) throws IOException {
+            InputStream inputStream = t.getRequestBody();
             JsonParser jsonParser = new JsonParser();
             JsonObject jsonObject = new JsonObject();
             Gson gson = new Gson();
+            String bookName = gson.fromJson(new InputStreamReader(inputStream, "UTF-8"), String.class);
+            Book newBook = new Book(bookList.get(bookList.size()-1).getBookID()+1, bookName);
+            bookList.add(newBook);
+            String jsnObj = gson.toJson(newBook);
+            String response = jsnObj;
+            t.sendResponseHeaders(200, response.length());
+            OutputStream os = t.getResponseBody();
+            os.write(response.getBytes());
+            os.close();
+        }
+    }
+
+    static class MyHandler4 implements HttpHandler {
+        @Override
+        public void handle(HttpExchange t) throws IOException {
+            InputStream inputStream = t.getRequestBody();
+            Gson gson = new Gson();
             int index = gson.fromJson(new InputStreamReader(inputStream, "UTF-8"), int.class);
-            //JSONArray jsonArray = new JSONArray();
-            //try {
-            //    jsonArray = (JSONArray)jsonParser.parse(
-            //            new InputStreamReader(inputStream, "UTF-8"));
-            //} catch (ParseException e) {
-            //    e.printStackTrace();
-            //}
-            //String response = jsonArray.toJSONString();
-            //jsonArray = (JSONArray)jsonParser.parse(bookList.toString());
-            //jsonArray.add(jsonParser.parsebookList.get(0));
-            //jsonArray.add(bookList.get(1));
-            //String response = "[{\"bookID\":1,\"name\":\"The Hobbit\"},{\"bookID\":1,\"name\":\"The Hobbit\"}]";
-            //String response = jsonArray.toJSONString();
-            String jsnObj = gson.toJson(bookList.get(index));
-            String response = jsnObj.toString();
+            Book bookDeleted = bookList.get(index);
+            bookList.remove(index);
+            String jsnObj = gson.toJson(bookDeleted);
+            String response = jsnObj;
             t.sendResponseHeaders(200, response.length());
             OutputStream os = t.getResponseBody();
             os.write(response.getBytes());
