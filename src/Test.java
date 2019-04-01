@@ -14,14 +14,9 @@ import com.sun.net.httpserver.HttpServer;
 
 public class Test {
 
-    private final static String QUEUE_NAME = "hello";
+    private final static String LIST_REQ_QUEUE_NAME = "List Request Queue";
+    private final static String LIST_RES_QUEUE_NAME = "List Response Queue";
     public static ArrayList<Book> bookList;
-
-    private static int fib(int n) {
-        if (n == 0) return 0;
-        if (n == 1) return 1;
-        return fib(n - 1) + fib(n - 2);
-    }
 
 
     public static void main(String[] args) throws Exception {
@@ -36,14 +31,18 @@ public class Test {
         Connection connection = factory.newConnection();
         Channel channel = connection.createChannel();
 
-        channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+        channel.queueDeclare(LIST_REQ_QUEUE_NAME, false, false, false, null);
         System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
 
         DeliverCallback deliverCallback = (consumerTag, delivery) -> {
             String message = new String(delivery.getBody(), "UTF-8");
             System.out.println(" [x] Received '" + message + "'");
+            Gson gson = new Gson();
+            String response = gson.toJson(bookList);
+            channel.basicPublish("", LIST_RES_QUEUE_NAME, null, response.getBytes("UTF-8"));
+            System.out.println(" [x] Sent '" + response + "'");
         };
-        channel.basicConsume(QUEUE_NAME, true, deliverCallback, consumerTag -> { });
+        channel.basicConsume(LIST_REQ_QUEUE_NAME, true, deliverCallback, consumerTag -> { });
 
         /*HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
         server.createContext("/getAllBooks", new MyHandler());

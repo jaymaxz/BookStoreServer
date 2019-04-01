@@ -2,13 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e81e68f5-2dd5-4358-8141-fd4bb39a3d25" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/BookStoreServer.iml" beforeDir="false" afterPath="$PROJECT_DIR$/BookStoreServer.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/BookStoreServer/Test$MyHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BookStoreServer/Test$MyHandler.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/BookStoreServer/Test$MyHandler2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BookStoreServer/Test$MyHandler2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/BookStoreServer/Test$MyHandler3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BookStoreServer/Test$MyHandler3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/BookStoreServer/Test$MyHandler4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BookStoreServer/Test$MyHandler4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/BookStoreServer/Test.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BookStoreServer/Test.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Test.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -26,8 +19,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Test.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
-              <caret line="16" column="53" selection-start-line="16" selection-start-column="53" selection-end-line="16" selection-end-column="53" />
+            <state relative-caret-position="360">
+              <caret line="42" column="55" selection-start-line="42" selection-start-column="55" selection-end-line="42" selection-end-column="55" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -153,8 +146,9 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.29164362" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.29496402" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -163,7 +157,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.3401728" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3401728" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39956802" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -192,8 +186,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Test.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="16" column="53" selection-start-line="16" selection-start-column="53" selection-end-line="16" selection-end-column="53" />
+        <state relative-caret-position="360">
+          <caret line="42" column="55" selection-start-line="42" selection-start-column="55" selection-end-line="42" selection-end-column="55" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
