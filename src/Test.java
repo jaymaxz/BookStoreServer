@@ -7,13 +7,22 @@ import java.util.ArrayList;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.rabbitmq.client.*;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
 public class Test {
 
+    private final static String QUEUE_NAME = "hello";
     public static ArrayList<Book> bookList;
+
+    private static int fib(int n) {
+        if (n == 0) return 0;
+        if (n == 1) return 1;
+        return fib(n - 1) + fib(n - 2);
+    }
+
 
     public static void main(String[] args) throws Exception {
         bookList = new ArrayList<Book>();
@@ -21,13 +30,28 @@ public class Test {
         bookList.add(book1);
         Book book2 = new Book(2,"Lord of the Rings");
         bookList.add(book2);
-        HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
+
+        ConnectionFactory factory = new ConnectionFactory();
+        factory.setHost("localhost");
+        Connection connection = factory.newConnection();
+        Channel channel = connection.createChannel();
+
+        channel.queueDeclare(QUEUE_NAME, false, false, false, null);
+        System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
+
+        DeliverCallback deliverCallback = (consumerTag, delivery) -> {
+            String message = new String(delivery.getBody(), "UTF-8");
+            System.out.println(" [x] Received '" + message + "'");
+        };
+        channel.basicConsume(QUEUE_NAME, true, deliverCallback, consumerTag -> { });
+
+        /*HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
         server.createContext("/getAllBooks", new MyHandler());
         server.createContext("/getBookDetails", new MyHandler2());
         server.createContext("/addBook", new MyHandler3());
         server.createContext("/deleteBook", new MyHandler4());
         server.setExecutor(null); // creates a default executor
-        server.start();
+        server.start();*/
     }
 
     static class MyHandler implements HttpHandler {
@@ -97,5 +121,7 @@ public class Test {
             os.close();
         }
     }
+
+
 }
 
