@@ -2,6 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e81e68f5-2dd5-4358-8141-fd4bb39a3d25" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BookStoreServer/Test$MyHandler.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BookStoreServer/Test$MyHandler.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BookStoreServer/Test$MyHandler2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BookStoreServer/Test$MyHandler2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BookStoreServer/Test$MyHandler3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BookStoreServer/Test$MyHandler3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BookStoreServer/Test$MyHandler4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BookStoreServer/Test$MyHandler4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/BookStoreServer/Test.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BookStoreServer/Test.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Test.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Test.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -19,8 +25,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/Test.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="42" column="55" selection-start-line="42" selection-start-column="55" selection-end-line="42" selection-end-column="55" />
+            <state relative-caret-position="394">
+              <caret line="75" column="35" lean-forward="true" selection-start-line="75" selection-start-column="35" selection-end-line="75" selection-end-column="35" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -73,7 +79,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -95,6 +100,7 @@
         </subPane>
       </pane>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -148,7 +154,7 @@
     <frame x="67" y="25" width="1853" height="1055" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.29496402" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.29828444" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -186,8 +192,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Test.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="42" column="55" selection-start-line="42" selection-start-column="55" selection-end-line="42" selection-end-column="55" />
+        <state relative-caret-position="394">
+          <caret line="75" column="35" lean-forward="true" selection-start-line="75" selection-start-column="35" selection-end-line="75" selection-end-column="35" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

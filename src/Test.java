@@ -16,6 +16,10 @@ public class Test {
 
     private final static String LIST_REQ_QUEUE_NAME = "List Request Queue";
     private final static String LIST_RES_QUEUE_NAME = "List Response Queue";
+    private final static String DETAILS_REQ_QUEUE_NAME = "Details Request Queue";
+    private final static String DETAILS_RES_QUEUE_NAME = "Details Response Queue";
+    private final static String ADD_REQ_QUEUE_NAME = "Add Request Queue";
+    private final static String ADD_RES_QUEUE_NAME = "Add Response Queue";
     public static ArrayList<Book> bookList;
 
 
@@ -33,16 +37,53 @@ public class Test {
 
         channel.queueDeclare(LIST_REQ_QUEUE_NAME, false, false, false, null);
         System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
-
         DeliverCallback deliverCallback = (consumerTag, delivery) -> {
             String message = new String(delivery.getBody(), "UTF-8");
             System.out.println(" [x] Received '" + message + "'");
             Gson gson = new Gson();
             String response = gson.toJson(bookList);
+            channel.queueDeclare(LIST_RES_QUEUE_NAME, false, false, false, null);
             channel.basicPublish("", LIST_RES_QUEUE_NAME, null, response.getBytes("UTF-8"));
             System.out.println(" [x] Sent '" + response + "'");
         };
         channel.basicConsume(LIST_REQ_QUEUE_NAME, true, deliverCallback, consumerTag -> { });
+
+        channel.queueDeclare(DETAILS_REQ_QUEUE_NAME, false, false, false, null);
+        System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
+        DeliverCallback deliverCallback2 = (consumerTag, delivery) -> {
+            String message = new String(delivery.getBody(), "UTF-8");
+            System.out.println(" [x] Received '" + message + "'");
+            Gson gson = new Gson();
+            int value = gson.fromJson(message, int.class);
+            int index = value;
+            for (Book book: bookList){
+                if(book.getBookID()==value){
+                    index = value;
+                }
+            }
+            String response = gson.toJson(bookList.get(index-1));
+            channel.queueDeclare(DETAILS_RES_QUEUE_NAME, false, false, false, null);
+            channel.basicPublish("", DETAILS_RES_QUEUE_NAME, null, response.getBytes("UTF-8"));
+            System.out.println(" [x] Sent '" + response + "'");
+        };
+        channel.basicConsume(DETAILS_REQ_QUEUE_NAME, true, deliverCallback2, consumerTag -> { });
+
+        channel.queueDeclare(ADD_REQ_QUEUE_NAME, false, false, false, null);
+        System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
+        DeliverCallback deliverCallback3 = (consumerTag, delivery) -> {
+            String message = new String(delivery.getBody(), "UTF-8");
+            System.out.println(" [x] Received '" + message + "'");
+            Gson gson = new Gson();
+            String bookName = gson.fromJson(message, String.class);
+            Book newBook = new Book(bookList.get(bookList.size()-1).getBookID()+1, bookName);
+            bookList.add(newBook);
+            String response = gson.toJson(newBook);
+            channel.queueDeclare(ADD_RES_QUEUE_NAME, false, false, false, null);
+            channel.basicPublish("", ADD_RES_QUEUE_NAME, null, response.getBytes("UTF-8"));
+            System.out.println(" [x] Sent '" + response + "'");
+        };
+        channel.basicConsume(ADD_REQ_QUEUE_NAME, true, deliverCallback3, consumerTag -> { });
+
 
         /*HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
         server.createContext("/getAllBooks", new MyHandler());
