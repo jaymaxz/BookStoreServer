@@ -20,6 +20,8 @@ public class Test {
     private final static String DETAILS_RES_QUEUE_NAME = "Details Response Queue";
     private final static String ADD_REQ_QUEUE_NAME = "Add Request Queue";
     private final static String ADD_RES_QUEUE_NAME = "Add Response Queue";
+    private final static String DELETE_REQ_QUEUE_NAME = "Delete Request Queue";
+    private final static String DELETE_RES_QUEUE_NAME = "Delete Response Queue";
     public static ArrayList<Book> bookList;
 
 
@@ -84,6 +86,28 @@ public class Test {
         };
         channel.basicConsume(ADD_REQ_QUEUE_NAME, true, deliverCallback3, consumerTag -> { });
 
+
+        channel.queueDeclare(DELETE_REQ_QUEUE_NAME, false, false, false, null);
+        System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
+        DeliverCallback deliverCallback4 = (consumerTag, delivery) -> {
+            String message = new String(delivery.getBody(), "UTF-8");
+            System.out.println(" [x] Received '" + message + "'");
+            Gson gson = new Gson();
+            int value = gson.fromJson(message, int.class);
+            int index = value;
+            for (Book book: bookList){
+                if(book.getBookID()==value){
+                    index = value;
+                }
+            }
+            Book bookDeleted = bookList.get(index-1);
+            bookList.remove(index-1);
+            String response = gson.toJson(bookDeleted);
+            channel.queueDeclare(DELETE_RES_QUEUE_NAME, false, false, false, null);
+            channel.basicPublish("", DELETE_RES_QUEUE_NAME, null, response.getBytes("UTF-8"));
+            System.out.println(" [x] Sent '" + response + "'");
+        };
+        channel.basicConsume(DELETE_REQ_QUEUE_NAME, true, deliverCallback4, consumerTag -> { });
 
         /*HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
         server.createContext("/getAllBooks", new MyHandler());
